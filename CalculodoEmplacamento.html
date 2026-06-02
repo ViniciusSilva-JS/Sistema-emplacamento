@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emplacamento Bajaj</title>
+    <link rel="stylesheet" href="a3.css" />
+  </head>
+
+  <body>
+    <!-- Container principal: no desktop divide a tela em formulário e resultado. -->
+    <div class="app-shell is-centered">
+      <!-- Formulário usado pelo usuário para configurar a simulação. -->
+      <main class="card">
+        <div class="brand">
+          <span>BAJAJ</span>
+        </div>
+
+        <h1>Sistema de Emplacamento</h1>
+
+        <label for="pagamento">Forma de pagamento</label>
+        <select id="pagamento">
+          <option value="avista">&#128176; À vista</option>
+          <option value="financiado">&#128176; Financiado</option>
+        </select>
+
+        <label for="modelo">Escolha o modelo da moto</label>
+        <select id="modelo">
+          <option value="150">&#127949;&#65039; Pulsar 150</option>
+          <option value="160">&#127949;&#65039; Dominar 160 NS</option>
+          <option value="200">&#127949;&#65039; Dominar 200 NS</option>
+          <option value="250">&#127949;&#65039; Dominar 250</option>
+          <option value="400">&#127949;&#65039; Dominar 400</option>
+          <option value="400ns">&#127949;&#65039; Dominar NS400</option>
+        </select>
+
+        <label for="mes">Escolha o mês do emplacamento</label>
+        <select id="mes">
+          <option value="1">&#128197; Janeiro</option>
+          <option value="2">&#128197; Fevereiro</option>
+          <option value="3">&#128197; Março</option>
+          <option value="4">&#128197; Abril</option>
+          <option value="5">&#128197; Maio</option>
+          <option value="6">&#128197; Junho</option>
+          <option value="7">&#128197; Julho</option>
+          <option value="8">&#128197; Agosto</option>
+          <option value="9">&#128197; Setembro</option>
+          <option value="10">&#128197; Outubro</option>
+          <option value="11">&#128197; Novembro</option>
+          <option value="12">&#128197; Dezembro</option>
+        </select>
+
+        <div class="option-row">
+          <span>Adicionar o valor do IPVA?</span>
+          <label class="switch" for="ipva">
+            <input type="checkbox" id="ipva" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="option-row">
+          <span>Adicionar o valor da placa?</span>
+          <label class="switch" for="placa">
+            <input type="checkbox" id="placa" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="option-row">
+          <span>Adicionar o valor do despachante?</span>
+          <label class="switch" for="despachante">
+            <input type="checkbox" id="despachante" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="option-row">
+          <span>Adicionar o valor da taxa do DETRAN?</span>
+          <label class="switch" for="detran">
+            <input type="checkbox" id="detran" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="option-row">
+          <span>Adicionar o valor do licenciamento?</span>
+          <label class="switch" for="licenciamento">
+            <input type="checkbox" id="licenciamento" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <button type="button" onclick="calcular()">Calcular</button>
+      </main>
+
+      <!-- Painel de resultado. Começa com instruções e é atualizado pelo JavaScript. -->
+      <aside id="resultado" class="result-panel is-empty" aria-live="polite">
+        <section class="empty-card">
+          <div class="empty-icon">&#9432;</div>
+          <h2>Resumo da simulação</h2>
+          <p>
+            Escolha a forma de pagamento, o modelo, o mês do emplacamento e os
+            itens que deseja incluir. Depois clique em Calcular.
+          </p>
+        </section>
+      </aside>
+    </div>
+
+    <script src="a3.js"></script>
+  </body>
+</html>

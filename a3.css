@@ -1,0 +1,558 @@
+/* Faz padding e borda entrarem no tamanho total dos elementos. */
+* {
+  box-sizing: border-box;
+}
+
+/* Variaveis de cores usadas no projeto inteiro. */
+:root {
+  /* Cores principais inspiradas na identidade visual da Bajaj. */
+  --bajaj-blue: #005baa;
+  --bajaj-blue-dark: #003f7f;
+  --bajaj-blue-light: #1476d4;
+  --white: #ffffff;
+  --text-dark: #102033;
+  --page-black: #050608;
+  --page-black-soft: #15191f;
+  --page-black-light: #252b33;
+}
+
+/* Centraliza a aplicacao na tela e define o fundo principal. */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.14), transparent 34%),
+    linear-gradient(135deg, var(--page-black) 0%, var(--page-black-soft) 48%, var(--page-black-light) 100%);
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 32px;
+}
+
+/* Estrutura principal: comeca com o formulario centralizado em uma coluna. */
+.app-shell {
+  width: min(100%, 540px);
+  min-height: calc(100vh - 64px);
+  display: grid;
+  grid-template-columns: minmax(390px, 540px);
+  justify-content: center;
+  gap: 0;
+  align-items: center;
+  transition:
+    width 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    gap 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Estado ativado pelo JavaScript apos clicar em Calcular: abre duas colunas. */
+.app-shell.has-result {
+  width: min(100%, 1280px);
+  grid-template-columns: minmax(390px, 540px) minmax(420px, 1fr);
+  gap: 28px;
+}
+
+/* Card do formulario com campos da simulacao. */
+.card {
+  width: 100%;
+  background: var(--white);
+  color: var(--text-dark);
+  padding: 34px;
+  border-radius: 16px;
+  box-shadow: 0 18px 55px rgba(23, 35, 52, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-self: center;
+  animation: none;
+  transform: translateX(0);
+  transition:
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease;
+  will-change: transform;
+}
+
+/* Anima o formulario quando o resultado aparece ao lado. */
+.app-shell.has-result .card {
+  animation: slideFormLeft 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Faixa azul com o nome da marca no topo do formulario. */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--bajaj-blue);
+  color: var(--white);
+  border-radius: 12px;
+  padding: 22px 18px 20px;
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 5px;
+}
+
+/* Classe reservada para uma marca/logo em SVG, caso seja usada. */
+.bajaj-mark {
+  width: 92px;
+  height: 92px;
+  fill: var(--white);
+  display: block;
+}
+
+/* Titulo principal do formulario. */
+h1 {
+  text-align: center;
+  margin: 0 0 12px;
+  font-size: 36px;
+  color: var(--bajaj-blue);
+}
+
+/* Textos dos labels e descricoes das opcoes. */
+label,
+.option-row span {
+  font-size: 17px;
+  opacity: 0.9;
+}
+
+/* Campos de selecao do formulario. */
+select {
+  width: 100%;
+  padding: 15px 16px;
+  border-radius: 10px;
+  border: 1px solid #b8cce4;
+  background: #eef6ff;
+  color: var(--text-dark);
+  font-size: 17px;
+  outline: none;
+}
+
+/* Destaque de acessibilidade quando o select recebe foco. */
+select:focus {
+  border-color: var(--bajaj-blue);
+  box-shadow: 0 0 0 3px rgba(0, 91, 170, 0.15);
+}
+
+/* Linha de cada taxa opcional com texto a esquerda e switch a direita. */
+.option-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+/* Estrutura do botao liga/desliga das taxas. */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+  flex: 0 0 auto;
+}
+
+/* Esconde o checkbox real para deixar apenas o switch customizado visivel. */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Fundo arredondado do switch. */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #aebdcc;
+  border-radius: 999px;
+  transition: 0.3s;
+}
+
+/* Bolinha interna do switch. */
+.slider::before {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+/* Cor do switch quando a taxa esta selecionada. */
+input:checked + .slider {
+  background-color: var(--bajaj-blue);
+}
+
+/* Move a bolinha para a direita quando o switch esta ligado. */
+input:checked + .slider::before {
+  transform: translateX(24px);
+}
+
+/* Botao principal que executa o calculo. */
+button {
+  margin-top: 14px;
+  padding: 17px;
+  border: none;
+  border-radius: 12px;
+  background: var(--bajaj-blue);
+  color: var(--white);
+  font-weight: bold;
+  font-size: 19px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Feedback visual ao passar o mouse sobre botoes. */
+button:hover {
+  transform: scale(1.03);
+  background: var(--bajaj-blue-light);
+}
+
+/* Painel onde o JavaScript injeta o resumo da simulacao. */
+.result-panel {
+  display: block;
+  color: var(--white);
+  min-height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(42px) scale(0.985);
+  transition:
+    opacity 0.65s ease 0.25s,
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.18s,
+    visibility 0s linear 0.9s;
+}
+
+/* Mantem o resultado escondido enquanto o formulario esta centralizado. */
+.app-shell.is-centered .result-panel {
+  position: absolute;
+  width: min(100%, 640px);
+}
+
+/* Mostra o painel com fade e deslocamento suave apos calcular. */
+.app-shell.has-result .result-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  position: static;
+  transform: translateX(0) scale(1);
+  transition:
+    opacity 0.65s ease 0.25s,
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.18s,
+    visibility 0s;
+}
+
+/* Aparencia compartilhada dos cards do painel de resultado. */
+.result-card,
+.quota-card,
+.info-card,
+.empty-card {
+  background: linear-gradient(145deg, #15243a, #0d1b31);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 18px 45px rgba(23, 35, 52, 0.24);
+}
+
+/* Pequeno destaque quando o resultado e recalculado. */
+.result-panel.updated {
+  animation: highlightResult 0.5s ease;
+}
+
+/* Estado inicial do painel, antes de mostrar o calculo. */
+.empty-card {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Titulo do estado inicial. */
+.empty-card h2 {
+  font-size: 30px;
+  margin: 12px 0 8px;
+}
+
+/* Texto de orientacao do estado inicial. */
+.empty-card p {
+  max-width: 460px;
+  margin: 0;
+  color: #b9c6d8;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+/* Icone informativo usado no estado inicial. */
+.empty-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #0d2340;
+  color: #88bfff;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+}
+
+/* Alinha cabecalhos e cards com icone e texto lado a lado. */
+.result-header,
+.quota-card,
+.info-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Icones dos cards de resultado. */
+.result-icon,
+.quota-icon,
+.info-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #0f6f3d;
+  color: #54ff8a;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  flex: 0 0 auto;
+}
+
+/* Titulo dentro do card de resultado. */
+.result-title {
+  margin: 0;
+  font-size: 22px;
+}
+
+/* Textos secundarios e observacoes do painel. */
+.result-subtitle,
+.info-card p,
+.total-note {
+  margin: 4px 0 0;
+  color: #b9c6d8;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Lista com os itens cobrados ou nao incluidos. */
+.result-list {
+  margin: 22px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Linha individual do resumo, com nome da taxa e valor. */
+.result-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 0;
+  color: #e7eef8;
+  font-size: 17px;
+}
+
+/* Divisoria entre as linhas do resumo. */
+.result-line + .result-line {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Valor monetario de cada taxa incluida. */
+.result-value {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Texto usado quando uma taxa ficou fora do calculo. */
+.not-included {
+  color: #8fa0b8;
+  font-weight: 700;
+}
+
+/* Linha final que destaca o total da simulacao. */
+.total-row {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Rotulo do valor total. */
+.total-label {
+  color: #55f08a;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* Valores principais em destaque no painel. */
+.total-value,
+.quota-value {
+  color: #55f08a;
+  font-size: 32px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+/* Card que mostra a primeira cota do IPVA. */
+.quota-card {
+  justify-content: space-between;
+  margin-top: 18px;
+}
+
+/* Texto principal do card de cota. */
+.quota-card strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 18px;
+}
+
+/* Texto auxiliar do card de cota. */
+.quota-card small {
+  color: #b9c6d8;
+  font-size: 15px;
+}
+
+/* Cor especifica do icone do card de cota. */
+.quota-icon {
+  background: #123d34;
+}
+
+/* Card explicativo com as regras do calculo. */
+.info-card {
+  margin-top: 18px;
+  border-color: rgba(20, 118, 212, 0.35);
+  background: #0d2340;
+}
+
+/* Cabecalho do card explicativo. */
+.info-title {
+  color: #88bfff;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+/* Icone menor usado no card explicativo. */
+.info-icon {
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  color: #88bfff;
+  font-size: 18px;
+}
+
+/* Botao para limpar a simulacao e voltar ao estado inicial. */
+.reset-button {
+  width: 100%;
+  margin-top: 18px;
+  background: #263247;
+}
+
+/* Cor do botao de nova simulacao ao passar o mouse. */
+.reset-button:hover {
+  background: #33425c;
+}
+
+/* Animacao rapida para indicar que o resultado foi atualizado. */
+@keyframes highlightResult {
+  0% {
+    transform: translateY(-4px);
+    filter: brightness(1.25);
+  }
+
+  100% {
+    transform: translateY(0);
+    filter: brightness(1);
+  }
+}
+
+/* Animacao do formulario saindo do centro para abrir espaco ao resultado. */
+@keyframes slideFormLeft {
+  0% {
+    transform: translateX(56px) scale(0.992);
+    opacity: 0.96;
+  }
+
+  55% {
+    transform: translateX(-8px) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Em telas pequenas, a animacao fica vertical para combinar com o layout. */
+@keyframes slideFormLeftMobile {
+  0% {
+    transform: translateY(28px);
+    opacity: 0.92;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Ajustes para celular e tablets estreitos. */
+@media (max-width: 840px) {
+  /* Aproxima o conteudo do topo em telas menores. */
+  body {
+    align-items: flex-start;
+    padding: 18px;
+  }
+
+  /* No mobile, formulario e resultado ficam empilhados. */
+  .app-shell {
+    width: min(100%, 540px);
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: 18px;
+  }
+
+  /* Depois do calculo, o layout continua em uma coluna no mobile. */
+  .app-shell.has-result {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  /* Usa uma entrada vertical, mais natural para telas estreitas. */
+  .app-shell.has-result .card {
+    animation: slideFormLeftMobile 0.5s ease both;
+  }
+
+  /* Reduz o respiro interno para caber melhor no celular. */
+  .card {
+    padding: 24px;
+  }
+
+  /* Diminui o titulo principal no mobile. */
+  h1 {
+    font-size: 30px;
+  }
+
+  /* Diminui a marca para evitar quebra de layout. */
+  .brand {
+    font-size: 34px;
+  }
+
+  /* Empilha total e card de cota para nao apertar valores. */
+  .total-row,
+  .quota-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  /* Ajusta o tamanho dos valores principais no mobile. */
+  .total-value,
+  .quota-value {
+    font-size: 28px;
+  }
+}
