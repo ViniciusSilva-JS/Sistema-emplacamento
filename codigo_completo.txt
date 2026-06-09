@@ -1,0 +1,1145 @@
+﻿==================== index.html ====================
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <!-- Configuracoes basicas da pagina inicial do projeto. -->
+    <meta charset="UTF-8" />
+
+    <!-- Redireciona automaticamente para a tela principal do sistema. -->
+    <meta http-equiv="refresh" content="0; url=CalculodoEmplacamento.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema de Emplacamento</title>
+  </head>
+  <body>
+    <!-- Redirecionamento feito tambem por JavaScript, como segunda garantia. -->
+    <script>
+      window.location.href = "CalculodoEmplacamento.html";
+    </script>
+
+    <!-- Link manual caso o navegador nao execute o redirecionamento automatico. -->
+    <p>
+      Abrindo o sistema...
+      <a href="CalculodoEmplacamento.html">Clique aqui se nao abrir automaticamente.</a>
+    </p>
+  </body>
+</html>
+
+
+==================== CalculodoEmplacamento.html ====================
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <!-- Configuracoes basicas da pagina: acentuacao, responsividade e titulo. -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emplacamento Bajaj</title>
+    <!-- Importa o arquivo CSS responsavel pelo visual da tela. -->
+    <link rel="stylesheet" href="a3.css" />
+  </head>
+
+  <body>
+    <!-- Container principal: no desktop divide a tela em formulÃ¡rio e resultado. -->
+    <div class="app-shell is-centered">
+      <!-- FormulÃ¡rio usado pelo usuÃ¡rio para configurar a simulaÃ§Ã£o. -->
+      <main class="card">
+        <div class="brand">
+          <span>BAJAJ</span>
+        </div>
+
+        <h1>Sistema de Emplacamento</h1>
+
+        <!-- Campo para escolher se o pagamento sera a vista ou financiado. -->
+        <label for="pagamento">Forma de pagamento</label>
+        <select id="pagamento">
+          <option value="avista">&#128176; Ã€ vista</option>
+          <option value="financiado">&#128176; Financiado</option>
+        </select>
+
+        <!-- Campo separado para definir se o IPVA sera pago completo ou parcelado. -->
+        <label for="pagamentoIpva">Forma de pagamento do IPVA</label>
+        <select id="pagamentoIpva">
+          <option value="avista">&#128176; Ã€ vista com 5% de desconto</option>
+          <option value="parcelado">&#128176; Parcelado em 7x</option>
+        </select>
+
+        <!-- Campo com os modelos de motos disponiveis para a simulacao. -->
+        <label for="modelo">Escolha o modelo da moto</label>
+        <select id="modelo">
+          <option value="150">&#127949;&#65039; Pulsar 150</option>
+          <option value="160">&#127949;&#65039; Dominar 160 NS</option>
+          <option value="200">&#127949;&#65039; Dominar 200 NS</option>
+          <option value="250">&#127949;&#65039; Dominar 250</option>
+          <option value="400">&#127949;&#65039; Dominar 400</option>
+          <option value="400ns">&#127949;&#65039; Dominar NS400</option>
+        </select>
+
+        <label for="mes">Escolha o mÃªs do emplacamento</label>
+        <select id="mes">
+          <option value="1">&#128197; Janeiro</option>
+          <option value="2">&#128197; Fevereiro</option>
+          <option value="3">&#128197; MarÃ§o</option>
+          <option value="4">&#128197; Abril</option>
+          <option value="5">&#128197; Maio</option>
+          <option value="6">&#128197; Junho</option>
+          <option value="7">&#128197; Julho</option>
+          <option value="8">&#128197; Agosto</option>
+          <option value="9">&#128197; Setembro</option>
+          <option value="10">&#128197; Outubro</option>
+          <option value="11">&#128197; Novembro</option>
+          <option value="12">&#128197; Dezembro</option>
+        </select>
+
+        <!-- Cada linha abaixo liga ou desliga uma taxa no calculo final. -->
+        <div class="option-row">
+          <span>Adicionar o valor do IPVA?</span>
+          <label class="switch" for="ipva">
+            <input type="checkbox" id="ipva" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="option-row">
+          <span>Adicionar o valor da placa?</span>
+          <label class="switch" for="placa">
+            <input type="checkbox" id="placa" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="option-row">
+          <span>Adicionar o valor do despachante?</span>
+          <label class="switch" for="despachante">
+            <input type="checkbox" id="despachante" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="option-row">
+          <span>Adicionar o valor da taxa do DETRAN?</span>
+          <label class="switch" for="detran">
+            <input type="checkbox" id="detran" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="option-row">
+          <span>Adicionar o valor do licenciamento?</span>
+          <label class="switch" for="licenciamento">
+            <input type="checkbox" id="licenciamento" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <!-- Botao que chama a funcao calcular() no JavaScript. -->
+        <button type="button" onclick="calcular()">Calcular</button>
+      </main>
+
+      <!-- Painel de resultado. ComeÃ§a com instruÃ§Ãµes e Ã© atualizado pelo JavaScript. -->
+      <aside id="resultado" class="result-panel is-empty" aria-live="polite">
+        <section class="empty-card">
+          <div class="empty-icon">&#9432;</div>
+          <h2>Resumo da simulaÃ§Ã£o</h2>
+          <p>
+            Escolha a forma de pagamento, o modelo, o mÃªs do emplacamento e os
+            itens que deseja incluir. Depois clique em Calcular.
+          </p>
+        </section>
+      </aside>
+    </div>
+
+    <!-- Importa o JavaScript que faz os calculos e atualiza o resultado. -->
+    <script src="a3.js"></script>
+  </body>
+</html>
+
+
+==================== a3.css ====================
+/* Faz padding e borda entrarem no tamanho total dos elementos. */
+* {
+  box-sizing: border-box;
+}
+
+/* Variaveis de cores usadas no projeto inteiro. */
+:root {
+  /* Cores principais inspiradas na identidade visual da Bajaj. */
+  --bajaj-blue: #005baa;
+  --bajaj-blue-dark: #003f7f;
+  --bajaj-blue-light: #1476d4;
+  --white: #ffffff;
+  --text-dark: #102033;
+  --page-black: #050608;
+  --page-black-soft: #15191f;
+  --page-black-light: #252b33;
+}
+
+/* Centraliza a aplicacao na tela e define o fundo principal. */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.14), transparent 34%),
+    linear-gradient(135deg, var(--page-black) 0%, var(--page-black-soft) 48%, var(--page-black-light) 100%);
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 32px;
+}
+
+/* Estrutura principal: comeca com o formulario centralizado em uma coluna. */
+.app-shell {
+  width: min(100%, 540px);
+  min-height: calc(100vh - 64px);
+  display: grid;
+  grid-template-columns: minmax(390px, 540px);
+  justify-content: center;
+  gap: 0;
+  align-items: center;
+  transition:
+    width 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    gap 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Estado ativado pelo JavaScript apos clicar em Calcular: abre duas colunas. */
+.app-shell.has-result {
+  width: min(100%, 1280px);
+  grid-template-columns: minmax(390px, 540px) minmax(420px, 1fr);
+  gap: 28px;
+}
+
+/* Card do formulario com campos da simulacao. */
+.card {
+  width: 100%;
+  background: var(--white);
+  color: var(--text-dark);
+  padding: 34px;
+  border-radius: 16px;
+  box-shadow: 0 18px 55px rgba(23, 35, 52, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-self: center;
+  animation: none;
+  transform: translateX(0);
+  transition:
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease;
+  will-change: transform;
+}
+
+/* Anima o formulario quando o resultado aparece ao lado. */
+.app-shell.has-result .card {
+  animation: slideFormLeft 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Faixa azul com o nome da marca no topo do formulario. */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--bajaj-blue);
+  color: var(--white);
+  border-radius: 12px;
+  padding: 22px 18px 20px;
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 5px;
+}
+
+/* Classe reservada para uma marca/logo em SVG, caso seja usada. */
+.bajaj-mark {
+  width: 92px;
+  height: 92px;
+  fill: var(--white);
+  display: block;
+}
+
+/* Titulo principal do formulario. */
+h1 {
+  text-align: center;
+  margin: 0 0 12px;
+  font-size: 36px;
+  color: var(--bajaj-blue);
+}
+
+/* Textos dos labels e descricoes das opcoes. */
+label,
+.option-row span {
+  font-size: 17px;
+  opacity: 0.9;
+}
+
+/* Campos de selecao do formulario. */
+select {
+  width: 100%;
+  padding: 15px 16px;
+  border-radius: 10px;
+  border: 1px solid #b8cce4;
+  background: #eef6ff;
+  color: var(--text-dark);
+  font-size: 17px;
+  outline: none;
+}
+
+/* Destaque de acessibilidade quando o select recebe foco. */
+select:focus {
+  border-color: var(--bajaj-blue);
+  box-shadow: 0 0 0 3px rgba(0, 91, 170, 0.15);
+}
+
+/* Linha de cada taxa opcional com texto a esquerda e switch a direita. */
+.option-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+/* Estrutura do botao liga/desliga das taxas. */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+  flex: 0 0 auto;
+}
+
+/* Esconde o checkbox real para deixar apenas o switch customizado visivel. */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Fundo arredondado do switch. */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #aebdcc;
+  border-radius: 999px;
+  transition: 0.3s;
+}
+
+/* Bolinha interna do switch. */
+.slider::before {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+/* Cor do switch quando a taxa esta selecionada. */
+input:checked + .slider {
+  background-color: var(--bajaj-blue);
+}
+
+/* Move a bolinha para a direita quando o switch esta ligado. */
+input:checked + .slider::before {
+  transform: translateX(24px);
+}
+
+/* Botao principal que executa o calculo. */
+button {
+  margin-top: 14px;
+  padding: 17px;
+  border: none;
+  border-radius: 12px;
+  background: var(--bajaj-blue);
+  color: var(--white);
+  font-weight: bold;
+  font-size: 19px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Feedback visual ao passar o mouse sobre botoes. */
+button:hover {
+  transform: scale(1.03);
+  background: var(--bajaj-blue-light);
+}
+
+/* Painel onde o JavaScript injeta o resumo da simulacao. */
+.result-panel {
+  display: block;
+  color: var(--white);
+  min-height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(42px) scale(0.985);
+  transition:
+    opacity 0.65s ease 0.25s,
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.18s,
+    visibility 0s linear 0.9s;
+}
+
+/* Mantem o resultado escondido enquanto o formulario esta centralizado. */
+.app-shell.is-centered .result-panel {
+  position: absolute;
+  width: min(100%, 640px);
+}
+
+/* Mostra o painel com fade e deslocamento suave apos calcular. */
+.app-shell.has-result .result-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  position: static;
+  transform: translateX(0) scale(1);
+  transition:
+    opacity 0.65s ease 0.25s,
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.18s,
+    visibility 0s;
+}
+
+/* Aparencia compartilhada dos cards do painel de resultado. */
+.result-card,
+.quota-card,
+.info-card,
+.empty-card {
+  background: linear-gradient(145deg, #15243a, #0d1b31);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 18px 45px rgba(23, 35, 52, 0.24);
+}
+
+/* Pequeno destaque quando o resultado e recalculado. */
+.result-panel.updated {
+  animation: highlightResult 0.5s ease;
+}
+
+/* Estado inicial do painel, antes de mostrar o calculo. */
+.empty-card {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Titulo do estado inicial. */
+.empty-card h2 {
+  font-size: 30px;
+  margin: 12px 0 8px;
+}
+
+/* Texto de orientacao do estado inicial. */
+.empty-card p {
+  max-width: 460px;
+  margin: 0;
+  color: #b9c6d8;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+/* Icone informativo usado no estado inicial. */
+.empty-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #0d2340;
+  color: #88bfff;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+}
+
+/* Alinha cabecalhos e cards com icone e texto lado a lado. */
+.result-header,
+.quota-card,
+.info-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Icones dos cards de resultado. */
+.result-icon,
+.quota-icon,
+.info-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #0f6f3d;
+  color: #54ff8a;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  flex: 0 0 auto;
+}
+
+/* Titulo dentro do card de resultado. */
+.result-title {
+  margin: 0;
+  font-size: 22px;
+}
+
+/* Textos secundarios e observacoes do painel. */
+.result-subtitle,
+.info-card p,
+.total-note {
+  margin: 4px 0 0;
+  color: #b9c6d8;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Lista com os itens cobrados ou nao incluidos. */
+.result-list {
+  margin: 22px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Linha individual do resumo, com nome da taxa e valor. */
+.result-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 0;
+  color: #e7eef8;
+  font-size: 17px;
+}
+
+/* Divisoria entre as linhas do resumo. */
+.result-line + .result-line {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Valor monetario de cada taxa incluida. */
+.result-value {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Texto usado quando uma taxa ficou fora do calculo. */
+.not-included {
+  color: #8fa0b8;
+  font-weight: 700;
+}
+
+/* Linha final que destaca o total da simulacao. */
+.total-row {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Rotulo do valor total. */
+.total-label {
+  color: #55f08a;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* Valores principais em destaque no painel. */
+.total-value,
+.quota-value {
+  color: #55f08a;
+  font-size: 32px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+/* Card que mostra a primeira cota do IPVA. */
+.quota-card {
+  justify-content: space-between;
+  margin-top: 18px;
+}
+
+/* Texto principal do card de cota. */
+.quota-card strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 18px;
+}
+
+/* Texto auxiliar do card de cota. */
+.quota-card small {
+  color: #b9c6d8;
+  font-size: 15px;
+}
+
+/* Cor especifica do icone do card de cota. */
+.quota-icon {
+  background: #123d34;
+}
+
+/* Card explicativo com as regras do calculo. */
+.info-card {
+  margin-top: 18px;
+  border-color: rgba(20, 118, 212, 0.35);
+  background: #0d2340;
+}
+
+/* Cabecalho do card explicativo. */
+.info-title {
+  color: #88bfff;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+/* Icone menor usado no card explicativo. */
+.info-icon {
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  color: #88bfff;
+  font-size: 18px;
+}
+
+/* Botao para limpar a simulacao e voltar ao estado inicial. */
+.reset-button {
+  width: 100%;
+  margin-top: 18px;
+  background: #263247;
+}
+
+/* Cor do botao de nova simulacao ao passar o mouse. */
+.reset-button:hover {
+  background: #33425c;
+}
+
+/* Animacao rapida para indicar que o resultado foi atualizado. */
+@keyframes highlightResult {
+  0% {
+    transform: translateY(-4px);
+    filter: brightness(1.25);
+  }
+
+  100% {
+    transform: translateY(0);
+    filter: brightness(1);
+  }
+}
+
+/* Animacao do formulario saindo do centro para abrir espaco ao resultado. */
+@keyframes slideFormLeft {
+  0% {
+    transform: translateX(56px) scale(0.992);
+    opacity: 0.96;
+  }
+
+  55% {
+    transform: translateX(-8px) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Em telas pequenas, a animacao fica vertical para combinar com o layout. */
+@keyframes slideFormLeftMobile {
+  0% {
+    transform: translateY(28px);
+    opacity: 0.92;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Ajustes para celular e tablets estreitos. */
+@media (max-width: 840px) {
+  /* Aproxima o conteudo do topo em telas menores. */
+  body {
+    align-items: flex-start;
+    padding: 18px;
+  }
+
+  /* No mobile, formulario e resultado ficam empilhados. */
+  .app-shell {
+    width: min(100%, 540px);
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: 18px;
+  }
+
+  /* Depois do calculo, o layout continua em uma coluna no mobile. */
+  .app-shell.has-result {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  /* Usa uma entrada vertical, mais natural para telas estreitas. */
+  .app-shell.has-result .card {
+    animation: slideFormLeftMobile 0.5s ease both;
+  }
+
+  /* Reduz o respiro interno para caber melhor no celular. */
+  .card {
+    padding: 24px;
+  }
+
+  /* Diminui o titulo principal no mobile. */
+  h1 {
+    font-size: 30px;
+  }
+
+  /* Diminui a marca para evitar quebra de layout. */
+  .brand {
+    font-size: 34px;
+  }
+
+  /* Empilha total e card de cota para nao apertar valores. */
+  .total-row,
+  .quota-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  /* Ajusta o tamanho dos valores principais no mobile. */
+  .total-value,
+  .quota-value {
+    font-size: 28px;
+  }
+}
+
+
+==================== a3.js ====================
+function calcular() {
+  // Pega os campos principais do formulÃ¡rio.
+  const modeloSelect = document.getElementById("modelo");
+  const mesSelect = document.getElementById("mes");
+  const pagamentoSelect = document.getElementById("pagamento");
+  const pagamentoIpvaSelect = document.getElementById("pagamentoIpva");
+
+  // Guarda os valores escolhidos pelo usuÃ¡rio.
+  const modelo = modeloSelect.value;
+  const mes = Number(mesSelect.value);
+  const tipoPagamento = pagamentoSelect.value;
+  const tipoPagamentoIpva = pagamentoIpvaSelect.value;
+  const nomeModelo = modeloSelect.options[modeloSelect.selectedIndex].text;
+  const nomeMes = mesSelect.options[mesSelect.selectedIndex].text;
+  const nomePagamento =
+    pagamentoSelect.options[pagamentoSelect.selectedIndex].text;
+  const nomePagamentoIpva =
+    pagamentoIpvaSelect.options[pagamentoIpvaSelect.selectedIndex].text;
+
+  // Cada checkbox define se a taxa entra ou nÃ£o na simulaÃ§Ã£o.
+  const adicionarIpva = document.getElementById("ipva").checked;
+  const adicionarPlaca = document.getElementById("placa").checked;
+  const adicionarDespachante = document.getElementById("despachante").checked;
+  const adicionarDetran = document.getElementById("detran").checked;
+  const adicionarLicenciamento =
+    document.getElementById("licenciamento").checked;
+
+  // Tabela de preÃ§os e alÃ­quotas usadas no cÃ¡lculo.
+  const motos = {
+    150: { valor: 16500, aliquota: 0.02 },
+    160: { valor: 19500, aliquota: 0.02 },
+    200: { valor: 22500, aliquota: 0.02 },
+    250: { valor: 23400, aliquota: 0.03 },
+    400: { valor: 26990, aliquota: 0.03 },
+    "400ns": { valor: 26990, aliquota: 0.03 },
+  };
+
+  const moto = motos[modelo];
+
+  if (!moto) {
+    alert("Modelo invÃ¡lido.");
+    return;
+  }
+
+  // Calcula o IPVA proporcional contando o mÃªs escolhido atÃ© dezembro.
+  const ipvaTotal = moto.valor * moto.aliquota;
+  const valorMensal = ipvaTotal / 12;
+  const mesesProporcionais = 12 - mes + 1;
+  const parcelasIpva = 7;
+  let ipvaProporcional = valorMensal * mesesProporcionais;
+
+  // O desconto depende do pagamento do IPVA, nao da forma de compra da moto.
+  const ipvaComDesconto = adicionarIpva && tipoPagamentoIpva === "avista";
+
+  if (ipvaComDesconto) {
+    ipvaProporcional *= 0.95;
+  }
+
+  // Se o usuÃ¡rio desligar o IPVA, ele nÃ£o entra no total.
+  if (!adicionarIpva) {
+    ipvaProporcional = 0;
+  }
+
+  // Valores fixos das taxas opcionais.
+  const primeiraCota =
+    adicionarIpva && tipoPagamentoIpva === "parcelado"
+      ? ipvaProporcional / parcelasIpva
+      : 0;
+  const valorPlaca = adicionarPlaca ? 190 : 0;
+  const valorDespachante = adicionarDespachante ? 200 : 0;
+  const valorDetran = adicionarDetran ? 118.42 : 0;
+  const valorLicenciamento = adicionarLicenciamento
+    ? tipoPagamento === "avista"
+      ? 100
+      : 154
+    : 0;
+
+  const total =
+    ipvaProporcional +
+    valorPlaca +
+    valorDespachante +
+    valorDetran +
+    valorLicenciamento;
+
+  // Monta o painel de resultado com os valores calculados.
+  const appShell = document.querySelector(".app-shell");
+  const resultado = document.getElementById("resultado");
+  appShell.classList.remove("is-centered");
+  appShell.classList.add("has-result");
+  resultado.className = "result-panel updated";
+  resultado.innerHTML = `
+    <section class="result-card">
+      <div class="result-header">
+        <div class="result-icon">&#9635;</div>
+        <div>
+          <h2 class="result-title">Resumo da simulaÃ§Ã£o</h2>
+          <p class="result-subtitle">${nomePagamento} &bull; IPVA ${limparIcone(nomePagamentoIpva)} &bull; ${limparIcone(nomeModelo)} &bull; ${limparIcone(nomeMes)}</p>
+        </div>
+      </div>
+
+      <div class="result-list">
+        <div class="result-line">
+          <span>IPVA proporcional ${ipvaComDesconto ? "com 5% desc." : ""}</span>
+          ${valorOuNaoIncluso(adicionarIpva, ipvaProporcional)}
+        </div>
+        <div class="result-line">
+          <span>Placa</span>
+          ${valorOuNaoIncluso(adicionarPlaca, valorPlaca)}
+        </div>
+        <div class="result-line">
+          <span>Despachante</span>
+          ${valorOuNaoIncluso(adicionarDespachante, valorDespachante)}
+        </div>
+        <div class="result-line">
+          <span>Taxa do DETRAN</span>
+          ${valorOuNaoIncluso(adicionarDetran, valorDetran)}
+        </div>
+        <div class="result-line">
+          <span>Licenciamento ${tipoPagamento === "avista" ? "(Ã  vista)" : "(financiado)"}</span>
+          ${valorOuNaoIncluso(adicionarLicenciamento, valorLicenciamento)}
+        </div>
+      </div>
+
+      <div class="total-row">
+        <div>
+          <div class="total-label">Valor total</div>
+          <p class="total-note">Somente os valores selecionados</p>
+        </div>
+        <div class="total-value">${formatar(total)}</div>
+      </div>
+    </section>
+
+    <section class="quota-card">
+      <div>
+        <strong>${!adicionarIpva ? "IPVA nÃ£o incluso" : tipoPagamentoIpva === "parcelado" ? `Primeira cota (1 de ${parcelasIpva})` : "IPVA pago completo"}</strong>
+        <small>${adicionarIpva ? tipoPagamentoIpva === "parcelado" ? `IPVA dividido em ${parcelasIpva}x` : "Pagamento completo com 5% de desconto" : "IPVA nÃ£o incluso"}</small>
+      </div>
+      <div class="quota-value">${formatar(primeiraCota)}</div>
+      <div class="quota-icon">&#9633;</div>
+    </section>
+
+    <section class="info-card">
+      <div class="info-title">
+        <span class="info-icon">&#9432;</span>
+        <span>Como funciona o cÃ¡lculo?</span>
+      </div>
+      <p>
+        O IPVA Ã© opcional. Quando incluso, o sistema calcula o valor
+        proporcional contando o mÃªs escolhido atÃ© dezembro. Por exemplo:
+        emplacando em maio, conta de maio a dezembro, totalizando 8 meses. O
+        desconto de 5% entra quando o IPVA Ã© pago completo.
+      </p>
+    </section>
+
+    <button type="button" class="reset-button" onclick="novaSimulacao()">
+      &#8635; Nova simulaÃ§Ã£o
+    </button>
+  `;
+
+  setTimeout(() => {
+    resultado.classList.remove("updated");
+  }, 500);
+}
+
+// Formata qualquer nÃºmero no padrÃ£o de moeda brasileira.
+function formatar(valor) {
+  return valor.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+}
+
+// Mostra o valor quando a taxa foi incluÃ­da ou "NÃ£o incluso" quando foi desligada.
+function valorOuNaoIncluso(incluir, valor) {
+  if (!incluir) {
+    return '<span class="not-included">NÃ£o incluso</span>';
+  }
+
+  return `<span class="result-value">${formatar(valor)}</span>`;
+}
+
+// Remove emojis/sÃ­mbolos para deixar o resumo textual mais limpo.
+function limparIcone(texto) {
+  return texto.replace(/[^\p{L}\p{N}\s]/gu, "").trim();
+}
+
+// Volta todos os campos para o estado inicial da simulaÃ§Ã£o.
+function novaSimulacao() {
+  document.getElementById("pagamento").value = "avista";
+  document.getElementById("pagamentoIpva").value = "avista";
+  document.getElementById("modelo").value = "150";
+  document.getElementById("mes").value = "1";
+  document.getElementById("ipva").checked = true;
+  document.getElementById("placa").checked = false;
+  document.getElementById("despachante").checked = false;
+  document.getElementById("detran").checked = false;
+  document.getElementById("licenciamento").checked = false;
+
+  document.getElementById("resultado").className = "result-panel is-empty";
+  document.querySelector(".app-shell").className = "app-shell is-centered";
+  document.getElementById("resultado").innerHTML = `
+    <section class="empty-card">
+      <div class="empty-icon">&#9432;</div>
+      <h2>Resumo da simulaÃ§Ã£o</h2>
+      <p>
+        Escolha a forma de pagamento, o modelo, o mÃªs do emplacamento e os
+        itens que deseja incluir. Depois clique em Calcular.
+      </p>
+    </section>
+  `;
+}
+
+
+==================== README.md ====================
+# Sistema de Emplacamento Bajaj
+
+Este projeto Ã© uma pÃ¡gina web simples para simular custos de emplacamento de motos Bajaj. O usuÃ¡rio escolhe forma de pagamento, modelo da moto, mÃªs do emplacamento e quais taxas deseja incluir. Depois, o sistema calcula o valor total e mostra um resumo detalhado.
+
+## Arquivos do projeto
+
+- `CalculodoEmplacamento.html`: monta a estrutura da tela, os campos do formulÃ¡rio e o painel de resultado.
+- `a3.css`: define o visual do sistema, incluindo cores, layout, botÃµes, cards e responsividade.
+- `a3.js`: contÃ©m toda a lÃ³gica de cÃ¡lculo, formataÃ§Ã£o dos valores e atualizaÃ§Ã£o do resultado na tela.
+
+## Como usar
+
+1. Abra o arquivo `CalculodoEmplacamento.html` no navegador.
+2. Escolha a forma de pagamento: Ã  vista ou financiado.
+3. Escolha o modelo da moto.
+4. Escolha o mÃªs do emplacamento.
+5. Marque quais custos entram na simulaÃ§Ã£o: IPVA, placa, despachante, taxa do DETRAN e licenciamento.
+6. Clique em `Calcular`.
+7. Veja o resumo da simulaÃ§Ã£o no painel da direita.
+
+## Regras de cÃ¡lculo
+
+O sistema usa uma tabela interna de modelos no arquivo `a3.js`. Cada moto tem um valor base e uma alÃ­quota de IPVA:
+
+- Pulsar 150: R$ 16.300,00, alÃ­quota de 2%.
+- Dominar 160 NS: R$ 19.150,00, alÃ­quota de 2%.
+- Dominar 200 NS: R$ 21.900,00, alÃ­quota de 2%.
+- Dominar 250: R$ 23.400,00, alÃ­quota de 3%.
+- Dominar 400: R$ 26.990,00, alÃ­quota de 3%.
+- Dominar NS400: R$ 26.990,00, alÃ­quota de 3%.
+
+O IPVA total Ã© calculado assim:
+
+```text
+valor da moto x alÃ­quota
+```
+
+Depois, o sistema calcula o IPVA proporcional:
+
+```text
+IPVA total / 12 x meses restantes
+```
+
+Os meses proporcionais sÃ£o contados incluindo o mÃªs escolhido atÃ© dezembro. Por exemplo: se o usuÃ¡rio escolher maio, o sistema considera maio, junho, julho, agosto, setembro, outubro, novembro e dezembro, totalizando 8 meses.
+
+Mesmo que o IPVA seja proporcional ao mÃªs escolhido, o valor proporcional continua sendo dividido em 7 parcelas no painel de primeira cota.
+
+Se a forma de pagamento for Ã  vista, o IPVA recebe 5% de desconto.
+
+## Taxas opcionais
+
+O usuÃ¡rio pode ligar ou desligar cada taxa:
+
+- IPVA: calculado proporcionalmente.
+- Placa: R$ 190,00.
+- Despachante: R$ 200,00.
+- Taxa do DETRAN: R$ 118,42.
+- Licenciamento Ã  vista: R$ 100,00.
+- Licenciamento financiado: R$ 154,00.
+
+Quando uma taxa estÃ¡ desligada, o resumo mostra `NÃ£o incluso`.
+
+## Resultado
+
+O painel de resultado mostra:
+
+- Resumo da simulaÃ§Ã£o.
+- IPVA proporcional.
+- Taxas incluÃ­das ou nÃ£o incluÃ­das.
+- Valor total.
+- Primeira cota do IPVA.
+- ExplicaÃ§Ã£o do cÃ¡lculo.
+- BotÃ£o para iniciar uma nova simulaÃ§Ã£o.
+
+## Responsividade
+
+No computador, o formulÃ¡rio fica Ã  esquerda e o resultado Ã  direita. Em telas menores, como celulares, o resultado aparece abaixo do formulÃ¡rio.
+
+## Principais funÃ§Ãµes do JavaScript
+
+- `calcular()`: lÃª os dados escolhidos pelo usuÃ¡rio, calcula os valores e mostra o resultado.
+- `formatar(valor)`: transforma nÃºmeros em moeda brasileira.
+- `valorOuNaoIncluso(incluir, valor)`: decide se mostra o valor formatado ou o texto `NÃ£o incluso`.
+- `limparIcone(texto)`: remove sÃ­mbolos dos nomes usados no resumo.
+- `novaSimulacao()`: limpa os campos e volta o painel de resultado para o estado inicial.
+
+## Fluxograma do funcionamento
+
+O sistema segue a estrutura basica de **entrada de dados**, **processamento** e **saida de informacoes**.
+
+```text
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚            INICIO            â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+               â”‚
+               v
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚       ENTRADA DE DADOS       â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ Usuario seleciona:           â”‚
+â”‚ - forma de pagamento         â”‚
+â”‚ - modelo da moto             â”‚
+â”‚ - mes do emplacamento        â”‚
+â”‚ - taxas que deseja incluir   â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+               â”‚
+               v
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚       CLIQUE EM CALCULAR     â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+               â”‚
+               v
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚         PROCESSAMENTO        â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ O JavaScript executa:        â”‚
+â”‚ 1. Le os dados do formulario â”‚
+â”‚ 2. Busca o valor da moto     â”‚
+â”‚ 3. Calcula o IPVA total      â”‚
+â”‚ 4. Calcula o IPVA proporcionalâ”‚
+â”‚ 5. Aplica desconto se for    â”‚
+â”‚    pagamento a vista         â”‚
+â”‚ 6. Soma as taxas marcadas    â”‚
+â”‚ 7. Calcula o valor total     â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+               â”‚
+               v
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚      SAIDA DE INFORMACOES    â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ O sistema mostra na tela:    â”‚
+â”‚ - resumo da simulacao        â”‚
+â”‚ - IPVA proporcional          â”‚
+â”‚ - taxas incluidas ou nao     â”‚
+â”‚ - primeira cota do IPVA      â”‚
+â”‚ - valor total da simulacao   â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+               â”‚
+               v
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚             FIM              â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+```
+
+### Resumo em etapas
+
+| Etapa         | O que acontece                                                  | Arquivo principal            |
+| ------------- | --------------------------------------------------------------- | ---------------------------- |
+| Entrada       | O usuario escolhe os dados no formulario.                       | `CalculodoEmplacamento.html` |
+| Processamento | A funcao `calcular()` le os dados, calcula IPVA, taxas e total. | `a3.js`                      |
+| Saida         | O painel de resultado e atualizado com os valores calculados.   | `a3.js` e `a3.css`           |
+
+### Fluxograma em ASCII
+
+Esta versao usa apenas caracteres simples para evitar problemas de acentuacao ou codificacao.
+
+```text
++------------------------------+
+|            INICIO            |
++--------------+---------------+
+               |
+               v
++------------------------------+
+|       ENTRADA DE DADOS       |
++------------------------------+
+| Usuario escolhe:             |
+| - forma de pagamento         |
+| - modelo da moto             |
+| - mes do emplacamento        |
+| - taxas opcionais            |
++--------------+---------------+
+               |
+               v
++------------------------------+
+|       CLIQUE EM CALCULAR     |
++--------------+---------------+
+               |
+               v
++------------------------------+
+|         PROCESSAMENTO        |
++------------------------------+
+| JavaScript executa:          |
+| - le os campos selecionados  |
+| - identifica a moto          |
+| - calcula o IPVA total       |
+| - calcula o IPVA proporcional|
+| - aplica desconto a vista    |
+| - soma as taxas marcadas     |
+| - calcula o total final      |
++--------------+---------------+
+               |
+               v
++------------------------------+
+|      SAIDA DE INFORMACOES    |
++------------------------------+
+| Sistema exibe:               |
+| - resumo da simulacao        |
+| - taxas incluidas            |
+| - taxas nao incluidas        |
+| - primeira cota do IPVA      |
+| - valor total                |
++--------------+---------------+
+               |
+               v
++------------------------------+
+|              FIM             |
++------------------------------+
+```
+
+
+==================== README2.md ====================
+# Sistema-emplacamento
+
+

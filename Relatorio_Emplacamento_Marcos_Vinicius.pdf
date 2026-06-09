@@ -1,0 +1,242 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Length 2750 >>
+stream
+BT
+/F1 12 Tf
+40 790 Td
+(Relatorio do Programa de Emplacamento) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Membros do Grupo:) Tj
+0 -14 Td
+(Marcos Vinicius da Silva Lima) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(A. Relatorio: Definicao) Tj
+0 -14 Td
+(O programa e um sistema web de simulacao de custos de emplacamento para motos Bajaj.) Tj
+0 -14 Td
+(O usuario escolhe o modelo, a forma de pagamento, o mes do emplacamento e) Tj
+0 -14 Td
+(quais taxas incluir. O sistema calcula o IPVA proporcional, aplica desconto) Tj
+0 -14 Td
+(quando apropriado e soma as taxas para apresentar o valor total.) Tj
+0 -14 Td
+(A motivacao foi construir um projeto util e educativo que ajuda o usuario a) Tj
+0 -14 Td
+(entender os custos de emplacamento e comparar opcoes de pagamento e taxas.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(B. Analise Etica e Transparencia) Tj
+0 -14 Td
+(O programa foi feito para ser honesto com o usuario, mostrando claramente) Tj
+0 -14 Td
+(quais taxas estao incluidas e quais nao estao. Nao ha favorecimento: os valores) Tj
+0 -14 Td
+(sao calculados com base em regras definidas e aplicadas igualmente a todas as) Tj
+0 -14 Td
+(opcoes.) Tj
+0 -14 Td
+(A interface evita resultados enganosos ao marcar itens nao selecionados como) Tj
+0 -14 Td
+(Nao incluso e ao apresentar o desconto apenas quando valido. Assim, a) Tj
+0 -14 Td
+(transparencia nas regras e na exibicao dos dados e mantida.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(C. Representacao Visual \(Fluxograma\)) Tj
+0 -14 Td
+(O fluxo principal do algoritmo e: entrada de dados -> clique em calcular ->) Tj
+0 -14 Td
+(processamento -> saida de informacoes.) Tj
+0 -14 Td
+(Fluxograma:) Tj
+0 -14 Td
+(INICIO) Tj
+0 -14 Td
+(  |) Tj
+0 -14 Td
+(ENTRADA DE DADOS: forma de pagamento, modelo, mes e taxas opcionais) Tj
+0 -14 Td
+(  |) Tj
+0 -14 Td
+(CLIQUE EM CALCULAR) Tj
+0 -14 Td
+(  |) Tj
+0 -14 Td
+(PROCESSAMENTO: ler campos, calcular IPVA, aplicar desconto, somar taxas,) Tj
+0 -14 Td
+(calcular total) Tj
+0 -14 Td
+(  |) Tj
+0 -14 Td
+(SAIDA: mostrar resumo, valores incluidos, valor total e primeira cota) Tj
+0 -14 Td
+(  |) Tj
+0 -14 Td
+(FIM) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(D. Codigo-Fonte \(Portugol\)) Tj
+0 -14 Td
+(funcao calcular\(\)) Tj
+0 -14 Td
+(    // Leitura dos dados do formulario) Tj
+0 -14 Td
+(    modelo <- lerModelo\(\)) Tj
+0 -14 Td
+(    mes <- lerMes\(\)) Tj
+0 -14 Td
+(    tipoPagamento <- lerTipoPagamento\(\)) Tj
+0 -14 Td
+(    tipoPagamentoIpva <- lerTipoPagamentoIpva\(\)) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(    adicionarIpva <- checkboxIpva\(\)) Tj
+0 -14 Td
+(    adicionarPlaca <- checkboxPlaca\(\)) Tj
+0 -14 Td
+(    adicionarDespachante <- checkboxDespachante\(\)) Tj
+0 -14 Td
+(    adicionarDetran <- checkboxDetran\(\)) Tj
+0 -14 Td
+(    adicionarLicenciamento <- checkboxLicenciamento\(\)) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(    tabelaMotos <- [) Tj
+0 -14 Td
+ET
+endstream
+endobj
+2 0 obj
+<< /Length 1940 >>
+stream
+BT
+/F1 12 Tf
+40 790 Td
+(        150 -> {valor: 16500, aliquota: 0.02},) Tj
+0 -14 Td
+(        160 -> {valor: 19500, aliquota: 0.02},) Tj
+0 -14 Td
+(        200 -> {valor: 22500, aliquota: 0.02},) Tj
+0 -14 Td
+(        250 -> {valor: 23400, aliquota: 0.03},) Tj
+0 -14 Td
+(        400 -> {valor: 26990, aliquota: 0.03},) Tj
+0 -14 Td
+(        400ns -> {valor: 26990, aliquota: 0.03}) Tj
+0 -14 Td
+(    ]) Tj
+0 -14 Td
+(    moto <- tabelaMotos[modelo]) Tj
+0 -14 Td
+(    se moto = nulo entao) Tj
+0 -14 Td
+(        mostrar\("Modelo invalido."\)) Tj
+0 -14 Td
+(        pare) Tj
+0 -14 Td
+(    fimse) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(    ipvaTotal <- moto.valor * moto.aliquota) Tj
+0 -14 Td
+(    valorMensal <- ipvaTotal / 12) Tj
+0 -14 Td
+(    mesesProporcionais <- 12 - mes + 1) Tj
+0 -14 Td
+(    ipvaProporcional <- valorMensal * mesesProporcionais) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(    se adicionarIpva e tipoPagamentoIpva = "avista" entao) Tj
+0 -14 Td
+(        ipvaProporcional <- ipvaProporcional * 0.95) Tj
+0 -14 Td
+(    fimse) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(    se nao adicionarIpva entao) Tj
+0 -14 Td
+(        ipvaProporcional <- 0) Tj
+0 -14 Td
+(    fimse) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(    valorPlaca <- se adicionarPlaca entao 190 senao 0 fimse) Tj
+0 -14 Td
+(    valorDespachante <- se adicionarDespachante entao 200 senao 0 fimse) Tj
+0 -14 Td
+(    valorDetran <- se adicionarDetran entao 118.42 senao 0 fimse) Tj
+0 -14 Td
+(    valorLicenciamento <- 0) Tj
+0 -14 Td
+(    se adicionarLicenciamento entao) Tj
+0 -14 Td
+(        se tipoPagamento = "avista" entao) Tj
+0 -14 Td
+(            valorLicenciamento <- 100) Tj
+0 -14 Td
+(        senao) Tj
+0 -14 Td
+(            valorLicenciamento <- 154) Tj
+0 -14 Td
+(        fimse) Tj
+0 -14 Td
+(    fimse) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(total <- ipvaProporcional + valorPlaca + valorDespachante + valorDetran +) Tj
+0 -14 Td
+(valorLicenciamento) Tj
+0 -14 Td
+(    mostrarResultado\(total\)) Tj
+0 -14 Td
+(fimfuncao) Tj
+0 -14 Td
+ET
+endstream
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 4 0 R /MediaBox [0 0 595 842] /Contents 1 0 R /Resources << /Font << /F1 3 0 R >> >> >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 5 0 R /MediaBox [0 0 595 842] /Contents 2 0 R /Resources << /Font << /F1 3 0 R >> >> >>
+endobj
+6 0 obj
+<< /Type /Pages /Kids [4 0 R 5 0 R] /Count 2 >>
+endobj
+7 0 obj
+<< /Type /Catalog /Pages 6 0 R >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000015 00000 n 
+0000002817 00000 n 
+0000004809 00000 n 
+0000004879 00000 n 
+0000005005 00000 n 
+0000005131 00000 n 
+0000005194 00000 n 
+trailer
+<< /Size 8 /Root 7 0 R >>
+startxref
+5243
+%EOF

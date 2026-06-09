@@ -1,0 +1,130 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Length 2846 >>
+stream
+BT
+/F1 12 Tf
+40 790 Td
+(Relatorio de Entrega - Sistema de Emplacamento Bajaj) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(Numero de membros: 1) Tj
+0 -14 Td
+(Membro:) Tj
+0 -14 Td
+(Marcos Vinicius da Silva Lima) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(A. Relatorio de Definicao) Tj
+0 -14 Td
+(O produto e um sistema web de simulacao de custos de emplacamento para motos Bajaj.) Tj
+0 -14 Td
+(Ele resolve o problema de informacao parcial e confusa sobre as despesas de emplacamento,) Tj
+0 -14 Td
+(permitindo ao usuario calcular de forma rapida e transparente todos os valores envolvidos.) Tj
+0 -14 Td
+(O publico-alvo e composto por potenciais compradores de motos, proprietarios que precisam) Tj
+0 -14 Td
+(entender o custo de ipva, placa, despachante, taxa do detran e licenciamento, e pessoas) Tj
+0 -14 Td
+(que buscam comparar opcoes de pagamento entre a vista e financiado.) Tj
+0 -14 Td
+(A persona e um jovem adulto interessado em comprar uma moto Bajaj, que deseja planejar) Tj
+0 -14 Td
+(as despesas de emplacamento com clareza antes da compra.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(B. Analise Etica e Transparencia) Tj
+0 -14 Td
+(A interface garante uma experiencia honesta e clara ao apresentar a simulacao em etapas) Tj
+0 -14 Td
+(facias de entender. As opcoes de taxas sao exibidas com interruptores que permitem) Tj
+0 -14 Td
+(incluir ou excluir cada valor, e o resultado mostra explicitamente quais itens estao) Tj
+0 -14 Td
+(incluidos ou nao incluidos.) Tj
+0 -14 Td
+(O sistema calcula os valores com base em regras fixas e visiveis, como o desconto de 5%) Tj
+0 -14 Td
+(para ipva pago a vista, evitando qualquer favorecimento indevido. O usuario sabe que) Tj
+0 -14 Td
+(o total final reflete apenas as escolhas feitas na tela.) Tj
+0 -14 Td
+(A seguranca da experiencia e aumentada pela simplicidade: o usuario nao precisa inserir) Tj
+0 -14 Td
+(dados sensiveis, apenas faz selecoes no formulario e recebe um resumo numerico claro.) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(C. Representacao Visual \(Fluxograma\)) Tj
+0 -14 Td
+(O desenho do fluxo de navegacao principal e organizado em: escolha de dados -> calculo ->) Tj
+0 -14 Td
+(exibicao do resultado.) Tj
+0 -14 Td
+(Fluxograma:) Tj
+0 -14 Td
+(INICIO) Tj
+0 -14 Td
+(  |) Tj
+0 -14 Td
+(PREENCHER FORMULARIO: selecionar forma de pagamento, modelo, mes e taxas) Tj
+0 -14 Td
+(  |) Tj
+0 -14 Td
+(CLICAR EM CALCULAR) Tj
+0 -14 Td
+(  |) Tj
+0 -14 Td
+(PROCESSAR DADOS: ler campos, buscar valor da moto, calcular ipva proporcional,) Tj
+0 -14 Td
+(aplicar desconto, somar taxas e totalizar) Tj
+0 -14 Td
+(  |) Tj
+0 -14 Td
+(EXIBIR RESUMO: mostrar valores incluidos, primeira cota e total final) Tj
+0 -14 Td
+(  |) Tj
+0 -14 Td
+(FIM) Tj
+0 -14 Td
+() Tj
+0 -14 Td
+(D. Link do Prototipo) Tj
+0 -14 Td
+(Link para o prototipo funcional demonstrando a aplicacao das heuristicas e usabilidade:) Tj
+0 -14 Td
+(https://viniciussilva-js.github.io/Sistema-emplacamento/) Tj
+0 -14 Td
+ET
+endstream
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 3 0 R /MediaBox [0 0 595 842] /Contents 1 0 R /Resources << /Font << /F1 2 0 R >> >> >>
+endobj
+4 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+5 0 obj
+<< /Type /Catalog /Pages 4 0 R >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000015 00000 n 
+0000002913 00000 n 
+0000002983 00000 n 
+0000003109 00000 n 
+0000003166 00000 n 
+trailer
+<< /Size 6 /Root 5 0 R >>
+startxref
+3215
+%EOF

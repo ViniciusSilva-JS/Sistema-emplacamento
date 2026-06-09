@@ -3,15 +3,19 @@ function calcular() {
   const modeloSelect = document.getElementById("modelo");
   const mesSelect = document.getElementById("mes");
   const pagamentoSelect = document.getElementById("pagamento");
+  const pagamentoIpvaSelect = document.getElementById("pagamentoIpva");
 
   // Guarda os valores escolhidos pelo usuário.
   const modelo = modeloSelect.value;
   const mes = Number(mesSelect.value);
   const tipoPagamento = pagamentoSelect.value;
+  const tipoPagamentoIpva = pagamentoIpvaSelect.value;
   const nomeModelo = modeloSelect.options[modeloSelect.selectedIndex].text;
   const nomeMes = mesSelect.options[mesSelect.selectedIndex].text;
   const nomePagamento =
     pagamentoSelect.options[pagamentoSelect.selectedIndex].text;
+  const nomePagamentoIpva =
+    pagamentoIpvaSelect.options[pagamentoIpvaSelect.selectedIndex].text;
 
   // Cada checkbox define se a taxa entra ou não na simulação.
   const adicionarIpva = document.getElementById("ipva").checked;
@@ -45,7 +49,10 @@ function calcular() {
   const parcelasIpva = 7;
   let ipvaProporcional = valorMensal * mesesProporcionais;
 
-  if (tipoPagamento === "avista") {
+  // O desconto depende do pagamento do IPVA, nao da forma de compra da moto.
+  const ipvaComDesconto = adicionarIpva && tipoPagamentoIpva === "avista";
+
+  if (ipvaComDesconto) {
     ipvaProporcional *= 0.95;
   }
 
@@ -55,7 +62,10 @@ function calcular() {
   }
 
   // Valores fixos das taxas opcionais.
-  const primeiraCota = ipvaProporcional / parcelasIpva;
+  const primeiraCota =
+    adicionarIpva && tipoPagamentoIpva === "parcelado"
+      ? ipvaProporcional / parcelasIpva
+      : 0;
   const valorPlaca = adicionarPlaca ? 190 : 0;
   const valorDespachante = adicionarDespachante ? 200 : 0;
   const valorDetran = adicionarDetran ? 118.42 : 0;
@@ -84,13 +94,13 @@ function calcular() {
         <div class="result-icon">&#9635;</div>
         <div>
           <h2 class="result-title">Resumo da simulação</h2>
-          <p class="result-subtitle">${nomePagamento} &bull; ${limparIcone(nomeModelo)} &bull; ${limparIcone(nomeMes)}</p>
+          <p class="result-subtitle">${nomePagamento} &bull; IPVA ${limparIcone(nomePagamentoIpva)} &bull; ${limparIcone(nomeModelo)} &bull; ${limparIcone(nomeMes)}</p>
         </div>
       </div>
 
       <div class="result-list">
         <div class="result-line">
-          <span>IPVA proporcional ${adicionarIpva && tipoPagamento === "avista" ? "com 5% desc." : ""}</span>
+          <span>IPVA proporcional ${ipvaComDesconto ? "com 5% desc." : ""}</span>
           ${valorOuNaoIncluso(adicionarIpva, ipvaProporcional)}
         </div>
         <div class="result-line">
@@ -122,8 +132,8 @@ function calcular() {
 
     <section class="quota-card">
       <div>
-        <strong>Primeira cota (1 de ${parcelasIpva})</strong>
-        <small>${adicionarIpva ? `IPVA dividido em ${parcelasIpva}x` : "IPVA não incluso"}</small>
+        <strong>${!adicionarIpva ? "IPVA não incluso" : tipoPagamentoIpva === "parcelado" ? `Primeira cota (1 de ${parcelasIpva})` : "IPVA pago completo"}</strong>
+        <small>${adicionarIpva ? tipoPagamentoIpva === "parcelado" ? `IPVA dividido em ${parcelasIpva}x` : "Pagamento completo com 5% de desconto" : "IPVA não incluso"}</small>
       </div>
       <div class="quota-value">${formatar(primeiraCota)}</div>
       <div class="quota-icon">&#9633;</div>
@@ -138,7 +148,7 @@ function calcular() {
         O IPVA é opcional. Quando incluso, o sistema calcula o valor
         proporcional contando o mês escolhido até dezembro. Por exemplo:
         emplacando em maio, conta de maio a dezembro, totalizando 8 meses. O
-        valor proporcional continua dividido em 7 parcelas.
+        desconto de 5% entra quando o IPVA é pago completo.
       </p>
     </section>
 
@@ -177,6 +187,7 @@ function limparIcone(texto) {
 // Volta todos os campos para o estado inicial da simulação.
 function novaSimulacao() {
   document.getElementById("pagamento").value = "avista";
+  document.getElementById("pagamentoIpva").value = "avista";
   document.getElementById("modelo").value = "150";
   document.getElementById("mes").value = "1";
   document.getElementById("ipva").checked = true;

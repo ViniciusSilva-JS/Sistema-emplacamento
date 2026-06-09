@@ -1,9 +1,11 @@
 <!doctype html>
 <html lang="pt-BR">
   <head>
+    <!-- Configuracoes basicas da pagina: acentuacao, responsividade e titulo. -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Emplacamento Bajaj</title>
+    <!-- Importa o arquivo CSS responsavel pelo visual da tela. -->
     <link rel="stylesheet" href="a3.css" />
   </head>
 
@@ -18,12 +20,21 @@
 
         <h1>Sistema de Emplacamento</h1>
 
+        <!-- Campo para escolher se o pagamento sera a vista ou financiado. -->
         <label for="pagamento">Forma de pagamento</label>
         <select id="pagamento">
           <option value="avista">&#128176; À vista</option>
           <option value="financiado">&#128176; Financiado</option>
         </select>
 
+        <!-- Campo separado para definir se o IPVA sera pago completo ou parcelado. -->
+        <label for="pagamentoIpva">Forma de pagamento do IPVA</label>
+        <select id="pagamentoIpva">
+          <option value="avista">&#128176; À vista com 5% de desconto</option>
+          <option value="parcelado">&#128176; Parcelado em 7x</option>
+        </select>
+
+        <!-- Campo com os modelos de motos disponiveis para a simulacao. -->
         <label for="modelo">Escolha o modelo da moto</label>
         <select id="modelo">
           <option value="150">&#127949;&#65039; Pulsar 150</option>
@@ -50,6 +61,7 @@
           <option value="12">&#128197; Dezembro</option>
         </select>
 
+        <!-- Cada linha abaixo liga ou desliga uma taxa no calculo final. -->
         <div class="option-row">
           <span>Adicionar o valor do IPVA?</span>
           <label class="switch" for="ipva">
@@ -90,6 +102,7 @@
           </label>
         </div>
 
+        <!-- Botao que chama a funcao calcular() no JavaScript. -->
         <button type="button" onclick="calcular()">Calcular</button>
       </main>
 
@@ -106,6 +119,7 @@
       </aside>
     </div>
 
+    <!-- Importa o JavaScript que faz os calculos e atualiza o resultado. -->
     <script src="a3.js"></script>
   </body>
 </html>
